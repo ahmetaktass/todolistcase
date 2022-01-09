@@ -165,6 +165,22 @@ button {
           justify-content: space-between;
 }
 
+.todoDay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.todoDay img {
+  margin-right: 12px;
+}
+
 /*MODAL*/
 .modal {
   position: fixed;
@@ -303,7 +319,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .todo_editInput {
   height: 40px;
   position: absolute;
-  left: 40px;
+  left: 44px;
   padding: 6px 8px;
   padding-left: 20px;
   border: none;

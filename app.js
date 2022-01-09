@@ -14,7 +14,7 @@ modalClose.addEventListener('click', () => {
 //todoform
 const form = document.querySelector('.todo_form')
 const input = document.querySelector('.todo_input')
-const inputDate = document.querySelector('.todo_input_date')
+
 const todo_container = document.querySelector('.todo_container')
 
 const startConf = () => {

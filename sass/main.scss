@@ -83,6 +83,14 @@ button {
   }
 }
 
+.todoDay {
+  @include flexCenter();
+
+  img {
+    margin-right: 12px;
+  }
+}
+
 /*MODAL*/
 
 .modal {
@@ -188,7 +196,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .todo_editInput {
   height: 40px;
   position: absolute;
-  left: 40px;
+  left: 44px;
   padding: 6px 8px;
   padding-left: 20px;
   border: none;
