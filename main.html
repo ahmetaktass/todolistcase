@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TodoList</title>
+    <link rel="stylesheet" href="./sass/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="main">
+        <h1>To do</h1>
+
+        <div class="todolist">
+          <div class=""></div>
+          <button class="button openModalBtn"><h2>Add New Task</h2></button>
+          <div class="modal">
+            <form class="todo_form">
+              <ul>
+                <li>
+                  <label for="">Title</label>
+                  <input type="text" class="todo_input" />
+                </li>
+                <li>
+                  <label for="">Date</label>
+                  <input type="date" class="todo_input_date" />
+                </li>
+              </ul>
+
+              <div class="modalButtons">
+                <button class="closeModalBtn">Cancel</button>
+                <button type="submit" class="todo_btn">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="todo_container"></div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
