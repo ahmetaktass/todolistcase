@@ -226,7 +226,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .todo_delete {
-  background: url("/src/icon/delete/passive.svg");
+  background: url("../src/icon/delete/passive.svg");
   background-position: center;
   background-size: contain;
   width: 44px;
@@ -235,7 +235,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .todo_edit {
-  background: url("/src/icon/edit.svg");
+  background: url("../src/icon/edit.svg");
   background-position: center;
   background-size: contain;
   width: 44px;
@@ -272,4 +272,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .todo.-edited .todo_right .todo_save {
   opacity: 1;
   pointer-events: all;
+}
+
+.todoDate {
+  img {
+    padding-top: 15px;
+    margin-right: 10px;
+    width: 44px;
+    height: 44px;
+  }
 }

@@ -14,16 +14,16 @@ modalClose.addEventListener('click', () => {
 //todoform
 const form = document.querySelector('.todo_form')
 const input = document.querySelector('.todo_input')
+const input_date = document.querySelector('.todo_input_date')
 
 const todo_container = document.querySelector('.todo_container')
 
 const startConf = () => {
   // baslangic ayarlari
-  const todos = JSON.parse(localStorage.getItem('todos'))
-  if (!todos) {
-    localStorage.setItem('todos', JSON.stringify([]))
-  } else {
-    todos.forEach((todo) => {
+  const todos = JSON.parse(localStorage.getItem('todos')) || {}
+
+  for (let date in todos) {
+    todos[date].forEach((todo) => {
       addHTML(todo)
     })
   }
@@ -42,14 +42,29 @@ const addTodo = (e) => {
     }, 2500)
     return false
   }
+  const dateVal = input_date.value
+
+  if (dateVal == '') {
+    // boş değer girilmeye çalışıyor ise hata veriyoruz
+    input_date.style.border = '1px solid tomato'
+    setTimeout(() => {
+      input.style.borderColor = 'transparent'
+    }, 2500)
+    return false
+  }
+
+  const todos = JSON.parse(localStorage.getItem('todos')) || {}
+
+  if (!Array.isArray(todos[dateVal])) todos[dateVal] = []
 
   const todo = {
     text: inputVal,
     isCompleted: false,
+    date: dateVal,
   }
 
-  const todos = JSON.parse(localStorage.getItem('todos'))
-  todos.push(todo)
+  todos[dateVal].push(todo)
+
   localStorage.setItem('todos', JSON.stringify(todos))
 
   addHTML(todo)
@@ -57,12 +72,18 @@ const addTodo = (e) => {
   form.reset()
 }
 
+
 const deleteTodo = (e) => {
   const todo = e.target.parentElement.parentElement
   const text = todo.firstChild.children[1].textContent
 
-  let todos = JSON.parse(localStorage.getItem('todos'))
-  todos = todos.filter((td) => td.text != text)
+  const todos = JSON.parse(localStorage.getItem('todos')) || {}
+
+
+  for (let date in todos) {
+    todos[date] = todos[date].filter((td) => td.text != text)
+  }
+
   localStorage.setItem('todos', JSON.stringify(todos))
 
   todo.remove()
@@ -72,12 +93,12 @@ const completeTodo = (e) => {
   const todo = e.target.parentElement.parentElement
   const text = todo.firstChild.children[1].textContent
 
-  let todos = JSON.parse(localStorage.getItem('todos'))
-
-  todos.forEach((td) => {
+  const todos = JSON.parse(localStorage.getItem('todos')) || {}
+  for (let date in todos) {
+  todos[date].forEach((td) => {
     if (td.text === text) td.isCompleted = !td.isCompleted
   })
-
+}
   localStorage.setItem('todos', JSON.stringify(todos))
 }
 
@@ -86,11 +107,16 @@ const saveTodo = (e) => {
   const prevText = todo.firstChild.children[1].textContent // değiştirilmeden önceki değer
   const newText = todo.firstChild.children[2].value // editlerken girdiğimiz yeni değer
 
-  let todos = JSON.parse(localStorage.getItem('todos'))
 
-  todos.forEach((td) => {
-    if (td.text === prevText) td.text = newText
-  })
+  const todos = JSON.parse(localStorage.getItem('todos')) || {}
+
+  for (let date in todos) {
+    todos[date].forEach((td) => {
+      if (td.text === prevText) 
+        td.text = newText
+
+    })
+  }
 
   localStorage.setItem('todos', JSON.stringify(todos))
 
@@ -103,8 +129,48 @@ const editTodo = (e) => {
   const todo = e.target.parentElement.parentElement
   todo.classList.add('-edited')
 }
+const dateFormat = (d) => {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
 
+  const dayIndex = d.getDay()
+  const dayName = days[dayIndex]
+  const monthIndex = d.getMonth()
+  const monthName = months[monthIndex]
+
+  return `${dayName}, ${monthName} ${d.getDate()}`
+}
 const addHTML = (todo) => {
+  let dateDiv = document.getElementById(todo.date)
+  if (!dateDiv) {
+    dateDiv = document.createElement('div')
+    dateDiv.id = todo.date
+    dateDiv.classList.add('todoDate')
+
+    const icon = document.createElement('img')
+    icon.src = './src/icon/takvim.svg'
+
+    const h1 = document.createElement('span')
+    h1.textContent = dateFormat(new Date(todo.date))
+
+    dateDiv.appendChild(icon)
+    dateDiv.appendChild(h1)
+    todo_container.appendChild(dateDiv)
+  }
+
   const todoDiv = document.createElement('div')
   todoDiv.classList.add('todo')
 
@@ -153,7 +219,7 @@ const addHTML = (todo) => {
   todoDiv.appendChild(todoLeft)
   todoDiv.appendChild(todoRight)
 
-  todo_container.appendChild(todoDiv)
+  dateDiv.appendChild(todoDiv)
 }
 
 startConf()
